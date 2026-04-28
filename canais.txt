@@ -1,29 +1,41 @@
 # =====================================================
-# Lista de canais IPTV.lab
-# Formato: PAIS|NOME|URL  (separado por barras verticais |)
-# Use codigos ISO-3166 alpha-2 para o pais (AR, BR, US...)
+# Lista de canais IPTV.lab — Argentina + bonus
+# Formato: PAIS|NOME|URL
 # Linhas comecando com # sao ignoradas
 # =====================================================
+#
+# IMPORTANTE: streams IPTV publicos sao instaveis. Se algo nao
+# tocar hoje, pode ser que volte amanha. Priorize a lista oficial
+# do iptv-org (botao "iptv-org Argentina" no painel) que e mantida
+# pela comunidade e atualizada constantemente.
+#
+# =====================================================
 
-# --- ARGENTINA ---
-# Atencao: o link abaixo e HTTP. Nao vai tocar em pagina HTTPS (GitHub Pages).
-# Para tocar Telefe via HTTPS, considere usar a lista oficial do iptv-org.
-AR|Telefe (HTTP - so funciona local)|http://190.104.226.30/Live/870787012c00961adaf9b2304d704b57/telefe_720.m3u8
+# ===== ARGENTINA - TELEFE =====
+# Telefe Internacional via Pluto TV (servico FAST oficial da Paramount,
+# que e dona da Telefe). Versao internacional, HTTPS, CORS aberto.
+AR|Telefe Internacional (Pluto TV)|https://stitcher-ipv4.pluto.tv/v1/stitch/embed/hls/channel/613237a1c9e0db0007a91350/master.m3u8?advertisingId=PSID&appVersion=unknown&deviceDNT=TARGETOPT&deviceId=PSID&deviceLat=90&deviceLon=0&deviceMake=unknown&deviceModel=unknown&deviceType=unknown&deviceVersion=unknown&embedPartner=&profileFloor=&profileLimit=&us_privacy=1YNY
 
-# Para uma lista atualizada da Argentina, aponte o campo "Fonte da Lista" para:
-# https://iptv-org.github.io/iptv/countries/ar.m3u
+# Telefe Argentina (sinal aberto local) - HTTP, so funciona local (file://)
+# AR|Telefe Argentina HTTP|http://190.104.226.30/Live/870787012c00961adaf9b2304d704b57/telefe_720.m3u8
 
-# --- ESTADOS UNIDOS (HTTPS - testa se a interface funciona) ---
+# ===== ARGENTINA - CANAIS PUBLICOS (contenidos.gob.ar) =====
+# Estes sao do governo argentino, geralmente HTTPS e abertos.
+# Teste e veja se funciona pra voce na sua regiao:
+AR|DeporTV|https://5fb24b460df87.streamlock.net/live-cont.ar/deportv/playlist.m3u8
+AR|Cine.AR|https://5fb24b460df87.streamlock.net/live-cont.ar/cinear/playlist.m3u8
+AR|Aunar (educativo)|https://5fb24b460df87.streamlock.net/live-cont.ar/mirador/playlist.m3u8
+
+# ===== ARGENTINA - UNIVERSIDADE =====
+AR|TV Universidad UNLP|https://stratus.stream.cespi.unlp.edu.ar/hls/tvunlp.m3u8
+
+# ===== TESTE / DEMO (HTTPS confirmado) =====
 US|NASA TV Public|https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8
 US|Red Bull TV|https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8
 
-# --- BRASIL (exemplos - confira se ainda funcionam) ---
-# BR|TV Brasil|https://...
-# BR|TV Cultura|https://...
-
 # =====================================================
-# Como adicionar mais canais:
-# 1. Edite este arquivo direto pelo GitHub
-# 2. Faca commit
-# 3. Clique em "Recarregar" no painel da pagina
+# DICA: para muito mais canais argentinos atualizados,
+# use o botao "iptv-org Argentina" no painel da pagina.
+# Ele carrega https://iptv-org.github.io/iptv/countries/ar.m3u
+# que tem ~80 canais argentinos curados pela comunidade.
 # =====================================================
