@@ -414,8 +414,16 @@ footer {
           <label>URL do arquivo (.txt ou .m3u)</label>
           <input type="text" id="list-url" value="canais.txt">
         </div>
-        <div class="btn-row">
+        <div class="btn-row" style="margin-bottom:6px">
           <button class="btn btn-primary" onclick="loadChannelList()">🔄 Recarregar</button>
+        </div>
+        <div style="font-size:10px;color:var(--text2);margin:8px 0 4px">Atalhos para listas comunitárias:</div>
+        <div class="btn-row" style="margin-bottom:4px">
+          <button class="btn btn-secondary" onclick="loadShortcut('https://iptv-org.github.io/iptv/countries/ar.m3u')" style="font-size:11px">🇦🇷 iptv-org AR</button>
+          <button class="btn btn-secondary" onclick="loadShortcut('https://iptv-org.github.io/iptv/countries/br.m3u')" style="font-size:11px">🇧🇷 iptv-org BR</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="loadShortcut('canais.txt')" style="font-size:11px">📄 canais.txt local</button>
         </div>
         <div id="status">Pronto</div>
       </div>
@@ -633,6 +641,11 @@ function parseM3U(text) {
 // ===================================================
 // CHANNEL LIST
 // ===================================================
+function loadShortcut(url) {
+  document.getElementById('list-url').value = url;
+  loadChannelList();
+}
+
 async function loadChannelList() {
   const url = document.getElementById('list-url').value.trim();
   if (!url) { setStatus('Informe a URL da lista', 'error'); return; }
