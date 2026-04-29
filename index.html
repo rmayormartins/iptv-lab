@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IPTV.lab</title>
+<title>IPTV.cmd — IPTV Commander</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js"></script>
 <style>
 :root {
@@ -336,6 +336,16 @@ footer {
   color: var(--text2);
   text-align: center;
 }
+footer a {
+  color: var(--accent2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color .2s;
+}
+footer a:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
 .search-box {
   position: relative;
 }
@@ -361,8 +371,8 @@ footer {
 <header>
   <div class="header-icon">📺</div>
   <div>
-    <h1>IPTV<span>.lab</span></h1>
-    <div class="sub">Player M3U8 / HLS · Prof. Ramon Mayor Martins</div>
+    <h1>IPTV<span>.cmd</span></h1>
+    <div class="sub">IPTV Commander · Player M3U8 / HLS</div>
   </div>
 </header>
 
@@ -381,48 +391,6 @@ footer {
         <div class="btn-row">
           <button class="btn btn-primary" onclick="playManual()">▶ Tocar</button>
           <button class="btn btn-secondary" onclick="stopPlayer()">⏹ Parar</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Lista de canais -->
-    <div class="section">
-      <div class="section-header">📺 Canais</div>
-      <div class="section-body">
-        <div class="form-group search-box">
-          <input type="text" id="search-input" placeholder="Buscar canal..." oninput="renderChannelList()">
-        </div>
-        <div class="form-group">
-          <label>Filtrar por país</label>
-          <select id="country-filter" onchange="renderChannelList()">
-            <option value="">Todos os países</option>
-          </select>
-        </div>
-        <div id="channel-list">
-          <div style="padding:14px;color:var(--text2);font-size:12px;text-align:center">
-            Carregando lista...
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Proxy CORS -->
-    <div class="section">
-      <div class="section-header">🛡️ Proxy CORS (opcional)</div>
-      <div class="section-body">
-        <div class="form-group">
-          <label>URL do Cloudflare Worker</label>
-          <input type="text" id="proxy-url" placeholder="https://meu-proxy.workers.dev">
-        </div>
-        <label class="radio-item" style="border:1px solid var(--border);border-radius:6px;padding:7px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:11px;margin-bottom:8px" id="proxy-toggle-wrap">
-          <input type="checkbox" id="proxy-toggle" style="cursor:pointer">
-          <span>Usar proxy para todos os streams</span>
-        </label>
-        <div class="btn-row">
-          <button class="btn btn-secondary" onclick="testProxy()" style="font-size:11px">🧪 Testar Proxy</button>
-        </div>
-        <div style="font-size:10px;color:var(--text2);margin-top:6px;line-height:1.5">
-          Resolve CORS e mixed content. Veja aba <strong>Proxy</strong> sobre como hospedar.
         </div>
       </div>
     </div>
@@ -523,6 +491,42 @@ footer {
           <button class="btn btn-secondary" onclick="loadShortcut('canais.txt')" style="font-size:11px">📄 canais.txt local</button>
         </div>
         <div id="status">Pronto</div>
+      </div>
+    </div>
+
+    <!-- Lista de canais -->
+    <div class="section">
+      <div class="section-header">📺 Canais</div>
+      <div class="section-body">
+        <div class="form-group search-box">
+          <input type="text" id="search-input" placeholder="Buscar canal..." oninput="renderChannelList()">
+        </div>
+        <div id="channel-list">
+          <div style="padding:14px;color:var(--text2);font-size:12px;text-align:center">
+            Carregando lista...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proxy CORS -->
+    <div class="section">
+      <div class="section-header">🛡️ Proxy CORS (opcional)</div>
+      <div class="section-body">
+        <div class="form-group">
+          <label>URL do Cloudflare Worker</label>
+          <input type="text" id="proxy-url" placeholder="https://meu-proxy.workers.dev">
+        </div>
+        <label class="radio-item" style="border:1px solid var(--border);border-radius:6px;padding:7px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:11px;margin-bottom:8px" id="proxy-toggle-wrap">
+          <input type="checkbox" id="proxy-toggle" style="cursor:pointer">
+          <span>Usar proxy para todos os streams</span>
+        </label>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="testProxy()" style="font-size:11px">🧪 Testar Proxy</button>
+        </div>
+        <div style="font-size:10px;color:var(--text2);margin-top:6px;line-height:1.5">
+          Resolve CORS e mixed content. Veja aba <strong>Proxy</strong> sobre como hospedar.
+        </div>
       </div>
     </div>
 
@@ -658,7 +662,12 @@ US|NASA TV|https://...m3u8</pre>
   </main>
 </div>
 
-<footer>Desenvolvido por Ramon Mayor Martins · IFSC · 2026</footer>
+<footer>
+  Desenvolvido por
+  <a href="https://rmayormartins.github.io" target="_blank" rel="noopener">Ramon Mayor Martins, PhD.</a>
+  · <a href="https://www.ifsc.edu.br" target="_blank" rel="noopener">IFSC</a>
+  · 2026
+</footer>
 
 <script>
 // ===================================================
@@ -844,7 +853,6 @@ async function loadChannelList() {
     if (channels.length === 0) throw new Error('Lista vazia ou formato inválido');
     state.channels = channels;
     state.countries = new Set(channels.map(c => c.country).filter(Boolean));
-    populateCountryFilter();
     renderChannelList();
     setStatus(`✓ ${channels.length} canais carregados (${state.countries.size} países)`, 'ok');
   } catch (err) {
@@ -858,20 +866,11 @@ async function loadChannelList() {
   }
 }
 
-function populateCountryFilter() {
-  const sel = document.getElementById('country-filter');
-  const countries = [...state.countries].sort();
-  sel.innerHTML = '<option value="">Todos os países</option>' +
-    countries.map(c => `<option value="${c}">${flagFor(c)} ${countryName(c)} (${c})</option>`).join('');
-}
-
 function renderChannelList() {
-  const filter = document.getElementById('country-filter').value;
   const search = document.getElementById('search-input').value.toLowerCase().trim();
   const list = document.getElementById('channel-list');
 
   let filtered = state.channels;
-  if (filter) filtered = filtered.filter(c => c.country === filter);
   if (search) filtered = filtered.filter(c => c.name.toLowerCase().includes(search));
 
   if (filtered.length === 0) {
