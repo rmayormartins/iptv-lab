@@ -412,12 +412,15 @@ footer {
       <div class="section-body">
         <div class="form-group">
           <label>URL do Cloudflare Worker</label>
-          <input type="text" id="proxy-url" placeholder="https://hls-proxy.rmayormartins.workers.dev/">
+          <input type="text" id="proxy-url" placeholder="https://meu-proxy.workers.dev">
         </div>
-        <label class="radio-item" style="border:1px solid var(--border);border-radius:6px;padding:7px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:11px" id="proxy-toggle-wrap">
+        <label class="radio-item" style="border:1px solid var(--border);border-radius:6px;padding:7px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:11px;margin-bottom:8px" id="proxy-toggle-wrap">
           <input type="checkbox" id="proxy-toggle" style="cursor:pointer">
           <span>Usar proxy para todos os streams</span>
         </label>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="testProxy()" style="font-size:11px">🧪 Testar Proxy</button>
+        </div>
         <div style="font-size:10px;color:var(--text2);margin-top:6px;line-height:1.5">
           Resolve CORS e mixed content. Veja aba <strong>Proxy</strong> sobre como hospedar.
         </div>
@@ -435,10 +438,86 @@ footer {
         <div class="btn-row" style="margin-bottom:6px">
           <button class="btn btn-primary" onclick="loadChannelList()">🔄 Recarregar</button>
         </div>
-        <div style="font-size:10px;color:var(--text2);margin:8px 0 4px">Atalhos para listas comunitárias:</div>
-        <div class="btn-row" style="margin-bottom:4px">
-          <button class="btn btn-secondary" onclick="loadShortcut('https://iptv-org.github.io/iptv/countries/ar.m3u')" style="font-size:11px">🇦🇷 iptv-org AR</button>
-          <button class="btn btn-secondary" onclick="loadShortcut('https://iptv-org.github.io/iptv/countries/br.m3u')" style="font-size:11px">🇧🇷 iptv-org BR</button>
+        <div style="font-size:10px;color:var(--text2);margin:8px 0 4px">Atalhos para listas iptv-org (comunidade):</div>
+        <div class="form-group" style="margin-bottom:6px">
+          <select id="iptvorg-country" onchange="loadIptvOrg(this.value)">
+            <option value="">— Escolha um país —</option>
+            <optgroup label="América Latina">
+              <option value="ar">🇦🇷 Argentina</option>
+              <option value="br">🇧🇷 Brasil</option>
+              <option value="mx">🇲🇽 México</option>
+              <option value="cl">🇨🇱 Chile</option>
+              <option value="uy">🇺🇾 Uruguai</option>
+              <option value="py">🇵🇾 Paraguai</option>
+              <option value="bo">🇧🇴 Bolívia</option>
+              <option value="pe">🇵🇪 Peru</option>
+              <option value="co">🇨🇴 Colômbia</option>
+              <option value="ec">🇪🇨 Equador</option>
+              <option value="ve">🇻🇪 Venezuela</option>
+              <option value="cr">🇨🇷 Costa Rica</option>
+              <option value="pa">🇵🇦 Panamá</option>
+              <option value="cu">🇨🇺 Cuba</option>
+              <option value="do">🇩🇴 Rep. Dominicana</option>
+            </optgroup>
+            <optgroup label="América do Norte">
+              <option value="us">🇺🇸 Estados Unidos</option>
+              <option value="ca">🇨🇦 Canadá</option>
+            </optgroup>
+            <optgroup label="Europa">
+              <option value="pt">🇵🇹 Portugal</option>
+              <option value="es">🇪🇸 Espanha</option>
+              <option value="fr">🇫🇷 França</option>
+              <option value="it">🇮🇹 Itália</option>
+              <option value="de">🇩🇪 Alemanha</option>
+              <option value="uk">🇬🇧 Reino Unido</option>
+              <option value="nl">🇳🇱 Holanda</option>
+              <option value="be">🇧🇪 Bélgica</option>
+              <option value="ch">🇨🇭 Suíça</option>
+              <option value="at">🇦🇹 Áustria</option>
+              <option value="se">🇸🇪 Suécia</option>
+              <option value="no">🇳🇴 Noruega</option>
+              <option value="fi">🇫🇮 Finlândia</option>
+              <option value="dk">🇩🇰 Dinamarca</option>
+              <option value="pl">🇵🇱 Polônia</option>
+              <option value="cz">🇨🇿 Tchéquia</option>
+              <option value="gr">🇬🇷 Grécia</option>
+              <option value="ie">🇮🇪 Irlanda</option>
+              <option value="ro">🇷🇴 Romênia</option>
+              <option value="hu">🇭🇺 Hungria</option>
+              <option value="ua">🇺🇦 Ucrânia</option>
+              <option value="ru">🇷🇺 Rússia</option>
+              <option value="tr">🇹🇷 Turquia</option>
+            </optgroup>
+            <optgroup label="Ásia">
+              <option value="jp">🇯🇵 Japão</option>
+              <option value="kr">🇰🇷 Coreia do Sul</option>
+              <option value="cn">🇨🇳 China</option>
+              <option value="in">🇮🇳 Índia</option>
+              <option value="id">🇮🇩 Indonésia</option>
+              <option value="th">🇹🇭 Tailândia</option>
+              <option value="vn">🇻🇳 Vietnã</option>
+              <option value="ph">🇵🇭 Filipinas</option>
+              <option value="il">🇮🇱 Israel</option>
+              <option value="sa">🇸🇦 Arábia Saudita</option>
+              <option value="ae">🇦🇪 Emirados Árabes</option>
+              <option value="ir">🇮🇷 Irã</option>
+              <option value="pk">🇵🇰 Paquistão</option>
+            </optgroup>
+            <optgroup label="África">
+              <option value="za">🇿🇦 África do Sul</option>
+              <option value="ng">🇳🇬 Nigéria</option>
+              <option value="eg">🇪🇬 Egito</option>
+              <option value="ma">🇲🇦 Marrocos</option>
+              <option value="ke">🇰🇪 Quênia</option>
+            </optgroup>
+            <optgroup label="Oceania">
+              <option value="au">🇦🇺 Austrália</option>
+              <option value="nz">🇳🇿 Nova Zelândia</option>
+            </optgroup>
+            <optgroup label="Listas globais">
+              <option value="__index">🌐 Todos os canais (global)</option>
+            </optgroup>
+          </select>
         </div>
         <div class="btn-row">
           <button class="btn btn-secondary" onclick="loadShortcut('canais.txt')" style="font-size:11px">📄 canais.txt local</button>
@@ -531,7 +610,7 @@ US|NASA TV|https://...m3u8</pre>
             <li>Clique em <strong>Edit code</strong> e cole o conteúdo de <code>hls-proxy-worker.js</code></li>
             <li>Clique <strong>Save and Deploy</strong></li>
             <li>Copie a URL gerada (algo como <code>https://hls-proxy.SEU-USUARIO.workers.dev</code>)</li>
-            <li>Cole no campo <strong>https://hls-proxy.rmayormartins.workers.dev/</strong> aqui na esquerda</li>
+            <li>Cole no campo <strong>URL do Cloudflare Worker</strong> aqui na esquerda</li>
             <li>Marque <strong>Usar proxy</strong> e teste tocar o canal HTTP</li>
           </ol>
         </div>
@@ -694,6 +773,63 @@ function parseM3U(text) {
 function loadShortcut(url) {
   document.getElementById('list-url').value = url;
   loadChannelList();
+}
+
+function loadIptvOrg(code) {
+  if (!code) return;
+  const url = code === '__index'
+    ? 'https://iptv-org.github.io/iptv/index.m3u'
+    : `https://iptv-org.github.io/iptv/countries/${code}.m3u`;
+  loadShortcut(url);
+}
+
+// ===================================================
+// PROXY DIAGNOSTIC
+// ===================================================
+async function testProxy() {
+  const proxy = document.getElementById('proxy-url').value.trim().replace(/\/+$/, '');
+  if (!proxy) {
+    setStatus('❌ Cole a URL do Worker primeiro', 'error');
+    return;
+  }
+  if (!/^https?:\/\//.test(proxy)) {
+    setStatus('❌ URL precisa começar com https://', 'error');
+    return;
+  }
+
+  setStatus('🧪 Testando Worker...', 'running');
+
+  // Teste 1: Worker está vivo?
+  try {
+    const r = await fetch(proxy + '/', { method: 'GET', cache: 'no-store' });
+    const txt = await r.text();
+    if (!r.ok) {
+      setStatus(`❌ Worker respondeu HTTP ${r.status}. Verifique o deploy no Cloudflare.`, 'error');
+      return;
+    }
+    if (!txt.includes('HLS Proxy Worker')) {
+      setStatus('⚠ URL respondeu mas não parece ser o HLS Proxy Worker. Conferiu o código?', 'error');
+      return;
+    }
+  } catch (e) {
+    setStatus(`❌ Worker não acessível: ${e.message}. URL correta? Deploy concluído?`, 'error');
+    return;
+  }
+
+  // Teste 2: Proxy consegue baixar um stream HTTPS conhecido (NASA)?
+  setStatus('🧪 Worker vivo. Testando se consegue proxiar stream...', 'running');
+  const testStream = 'https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8';
+  try {
+    const r = await fetch(proxy + '/?url=' + encodeURIComponent(testStream), { cache: 'no-store' });
+    const txt = await r.text();
+    if (r.ok && txt.startsWith('#EXTM3U')) {
+      setStatus('✅ Proxy funcionando! Worker vivo + stream HTTPS proxiado OK.', 'ok');
+    } else {
+      setStatus(`⚠ Worker vivo mas stream de teste falhou: HTTP ${r.status}`, 'error');
+    }
+  } catch (e) {
+    setStatus(`⚠ Worker vivo mas erro proxiando: ${e.message}`, 'error');
+  }
 }
 
 async function loadChannelList() {
@@ -859,12 +995,12 @@ function buildProxiedUrl(url) {
   return `${proxy}/?url=${encodeURIComponent(url)}`;
 }
 
-function playUrl(url) {
+async function playUrl(url) {
   const video = document.getElementById('video');
   if (state.hls) { state.hls.destroy(); state.hls = null; }
 
   const useProxy = document.getElementById('proxy-toggle').checked;
-  const proxy = document.getElementById('proxy-url').value.trim();
+  const proxy = document.getElementById('proxy-url').value.trim().replace(/\/+$/, '');
 
   // Mixed content check (so se NAO estiver usando proxy)
   if (!useProxy && location.protocol === 'https:' && url.startsWith('http:')) {
@@ -884,8 +1020,39 @@ function playUrl(url) {
   const finalUrl = buildProxiedUrl(url);
   if (useProxy) setStatus('Conectando via proxy...', 'running');
   else setStatus('Conectando: ' + url.slice(0, 40) + '...', 'running');
-
   showOverlay('Conectando ao stream...', true);
+
+  // PRE-FETCH para diagnostico claro quando usando proxy
+  if (useProxy) {
+    try {
+      const probe = await fetch(finalUrl, { method: 'GET', cache: 'no-store' });
+      if (!probe.ok) {
+        const body = await probe.text().catch(()=>'');
+        let diag;
+        if (probe.status === 403) diag = `Stream original retornou 403 (geo-block ou negado). Worker está OK.`;
+        else if (probe.status === 404) diag = `Stream original retornou 404 (URL morta). Worker está OK.`;
+        else if (probe.status === 502) diag = `Stream original não respondeu (offline/timeout). Worker está OK.`;
+        else if (probe.status === 0) diag = `Erro de rede ao falar com o Worker.`;
+        else diag = `Worker respondeu HTTP ${probe.status}. ${body.slice(0,100)}`;
+        showOverlay('❌ ' + diag);
+        setStatus(diag, 'error');
+        document.getElementById('np-live').textContent = 'ERRO';
+        return;
+      }
+      const txt = await probe.clone().text();
+      if (!txt.startsWith('#EXTM3U')) {
+        showOverlay('❌ Resposta não é um manifest M3U8 válido');
+        setStatus('Resposta inválida: ' + txt.slice(0, 60), 'error');
+        document.getElementById('np-live').textContent = 'ERRO';
+        return;
+      }
+    } catch (e) {
+      showOverlay('❌ Não conseguiu falar com o Worker');
+      setStatus(`Worker inacessível: ${e.message}. Clique em "Testar Proxy".`, 'error');
+      document.getElementById('np-live').textContent = 'ERRO';
+      return;
+    }
+  }
 
   const isHls = /\.m3u8(\?|$)/i.test(url) || /\.m3u8/i.test(finalUrl);
 
@@ -912,7 +1079,7 @@ function playUrl(url) {
         let msg = 'Erro fatal: ' + data.type + ' / ' + data.details;
         if (data.details === 'manifestLoadError') {
           msg = useProxy
-            ? 'Proxy não respondeu ou stream offline'
+            ? 'Falha ao carregar manifest via proxy. Stream original pode estar offline.'
             : 'Não conseguiu baixar o manifest (CORS ou stream offline) — tente ativar o proxy';
         }
         if (data.details === 'manifestParsingError') msg = 'Manifest inválido';
@@ -957,9 +1124,6 @@ function playUrl(url) {
 // INIT
 // ===================================================
 window.addEventListener('DOMContentLoaded', () => {
-  // Pre-popula com o link que voce passou para teste
-  document.getElementById('manual-url').value = 'http://190.104.226.30/Live/870787012c00961adaf9b2304d704b57/telefe_720.m3u8';
-
   // Restaura config do proxy (se ja foi configurado antes)
   try {
     const savedProxy = localStorage.getItem('iptvlab.proxy.url');
